@@ -35,11 +35,7 @@ contract FlashLoanArb is Ownable2Step, Pausable, ReentrancyGuard {
     /// @notice Primary swap router
     ISwapRouter public immutable swapRouter;
 
-    constructor(
-        address initialOwner,
-        address pool,
-        address router
-    ) Ownable(initialOwner) {
+    constructor(address initialOwner, address pool, address router) Ownable(initialOwner) {
         aavePool = IPool(pool);
         swapRouter = ISwapRouter(router);
     }
