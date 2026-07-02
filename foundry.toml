@@ -1,0 +1,10 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+remappings = [
+    "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+    "aave-v3-core/=lib/aave-v3-core/",
+    "v3-periphery/=lib/v3-periphery/contracts/",
+    "forge-std/=lib/forge-std/src/"
+]
