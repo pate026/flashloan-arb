@@ -1,0 +1,57 @@
+.
+├── Ownable-import
+├── PROJECT_STRUCTURE.txt
+├── README.md
+├── cache
+│   ├── solidity-files-cache.json
+│   └── test-failures
+├── foundry.lock
+├── foundry.toml
+├── lib
+│   ├── aave-v3-core
+│   ├── forge-std
+│   ├── openzeppelin-contracts
+│   └── v3-periphery
+├── out
+│   ├── Base.sol
+│   ├── Context.sol
+│   ├── Counter.s.sol
+│   ├── Counter.sol
+│   ├── Counter.t.sol
+│   ├── DataTypes.sol
+│   ├── FlashLoanArb.sol
+│   ├── FlashLoanArb.t.sol
+│   ├── FlashLoanSimpleReceiverBase.sol
+│   ├── IERC20.sol
+│   ├── IFlashLoanSimpleReceiver.sol
+│   ├── IMulticall3.sol
+│   ├── IPool.sol
+│   ├── IPoolAddressesProvider.sol
+│   ├── MockPoolAddressesProvider.sol
+│   ├── Ownable.sol
+│   ├── Script.sol
+│   ├── StdAssertions.sol
+│   ├── StdChains.sol
+│   ├── StdCheats.sol
+│   ├── StdConstants.sol
+│   ├── StdError.sol
+│   ├── StdInvariant.sol
+│   ├── StdJson.sol
+│   ├── StdMath.sol
+│   ├── StdStorage.sol
+│   ├── StdStyle.sol
+│   ├── StdToml.sol
+│   ├── StdUtils.sol
+│   ├── Test.sol
+│   ├── Vm.sol
+│   ├── build-info
+│   ├── console.sol
+│   └── safeconsole.sol
+├── script
+├── src
+│   └── FlashLoanArb.sol
+└── test
+    ├── FlashLoanArb.t.sol
+    └── mocks
+
+46 directories, 9 files
