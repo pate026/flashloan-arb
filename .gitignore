@@ -20,3 +20,6 @@ docs/
 !.env.example
 .env
 .env
+
+# Oma lisays: pidetaan kaikki broadcast-lokit poissa gitista
+/broadcast/

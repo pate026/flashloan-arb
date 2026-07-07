@@ -60,6 +60,18 @@ contract FlashLoanArb is FlashLoanSimpleReceiverBase, Ownable {
 
     event ArbExecuted(address indexed asset, uint256 amount, uint256 profit);
 
+    /// Sallitut router-osoitteet. Vain omistaja voi muokata.
+    /// Suojaa vahingoilta ja vaarilta router-osoitteilta.
+    mapping(address => bool) public allowedRouters;
+
+    event RouterAllowedSet(address indexed router, bool allowed);
+
+    /// Salli tai poista router kayttolistalta. Vain omistaja.
+    function setRouterAllowed(address router, bool allowed) external onlyOwner {
+        allowedRouters[router] = allowed;
+        emit RouterAllowedSet(router, allowed);
+    }
+
     constructor(address addressesProvider)
         FlashLoanSimpleReceiverBase(IPoolAddressesProvider(addressesProvider))
         Ownable(msg.sender)
@@ -113,6 +125,7 @@ contract FlashLoanArb is FlashLoanSimpleReceiverBase, Ownable {
         uint24 fee,
         uint256 amountIn
     ) internal returns (uint256 amountOut) {
+        require(allowedRouters[router], "router ei sallittu");
         IERC20(tokenIn).forceApprove(router, amountIn);
         amountOut = ISwapRouterV3(router).exactInputSingle(
             ISwapRouterV3.ExactInputSingleParams({
