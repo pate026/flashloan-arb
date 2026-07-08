@@ -4,7 +4,7 @@ from os import getenv
 # RPC
 # ------------------------------------------------------------------
 
-RPC_URL = getenv("POLYGON_RPC_URL")
+RPC_URL = getenv("RPC_URL")
 
 # ------------------------------------------------------------------
 # Polygon tokenit
