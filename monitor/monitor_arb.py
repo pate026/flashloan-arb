@@ -1,22 +1,15 @@
 #!/usr/bin/env python3
 """
-monitor_arb.py - Jatkuva flash loan -arbitraasin seuranta (Polygon, Uniswap V3).
+monitor_arb.py - Jatkuva flash loan -arbitraasin seuranta (Arbitrum, Uniswap V3).
 
 TURVALLINEN: VAIN LUKEE ja TULOSTAA. Ei laheta transaktioita, ei tarvitse
-private keyta. Kyselee Uniswap V3 Quoterilta hintoja saannollisin valiajoin
-ja halyttaa jos loytyy kannattava arbitraasi.
-
-Tarkoitus: nahda konkreettisesti KUINKA USEIN (jos koskaan) mahdollisuus
-vilahtaa ja kuinka nopeasti se katoaa. Opettaa MEV-kilpailun luonteen.
+private keyta.
 
 Kaytto:
-    export POLYGON_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/AVAIN
+    export ARBITRUM_RPC_URL=https://arb-mainnet.g.alchemy.com/v2/AVAIN
     python3 monitor_arb.py
 
     Lopeta: Ctrl+C (nayttaa yhteenvedon)
-
-Riippuvuudet:
-    pip install web3
 """
 
 import os
@@ -29,23 +22,21 @@ from web3 import Web3
 # ---------------------------------------------------------------------------
 # Asetukset - saada naita vapaasti
 # ---------------------------------------------------------------------------
-CHECK_INTERVAL_SEC = 10       # kuinka usein tarkistetaan
-MIN_PROFIT_USDC = 1.0         # halytysraja: vahintaan nain paljon voittoa
+CHECK_INTERVAL_SEC = 10
+MIN_PROFIT_USDC = 1.0
 
-# Panoskoot joita kokeillaan joka kierroksella (USDC, 6 desim.)
 TEST_AMOUNTS_USDC = [1_000, 2_000, 5_000, 10_000, 20_000]
 
 # ---------------------------------------------------------------------------
-# Polygon mainnet -osoitteet
+# Arbitrum One -osoitteet
 # ---------------------------------------------------------------------------
 QUOTER_V2 = Web3.to_checksum_address("0x61fFE014bA17989E743c5F6cB21bF9697530B21e")
 
-USDC = Web3.to_checksum_address("0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174")  # 6 desim.
-WETH = Web3.to_checksum_address("0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619")  # 18 desim.
+USDC = Web3.to_checksum_address("0xaf88d065e77c8cC2239327C5EDb3A432268e5831")  # 6 desim.
+WETH = Web3.to_checksum_address("0x82aF49447D8a07e3bd95BD0d56f35241523fBab1")  # 18 desim.
 
-AAVE_PREMIUM_BPS = 5   # 0.05 %
+AAVE_PREMIUM_BPS = 5
 
-# Reitti: USDC --(feeBuy)--> WETH --(feeSell)--> USDC
 FEE_BUY = 500
 FEE_SELL = 3000
 
@@ -84,7 +75,6 @@ def get_quote(quoter, token_in, token_out, amount_in, fee):
 
 
 def check_once(quoter):
-    """Yksi tarkistuskierros. Palauttaa (paras_voitto_usdc, paras_panos_usdc)."""
     best_profit = None
     best_amount = 0
 
@@ -107,8 +97,6 @@ def check_once(quoter):
 
 
 def alert(profit, amount):
-    """Halytys kun loytyy kannattava mahdollisuus."""
-    # \a = terminaalin aanimerkki (bell)
     print("\a")
     print("=" * 72)
     print(f"  !!! MAHDOLLISUUS LOYTYI !!!")
@@ -120,9 +108,9 @@ def alert(profit, amount):
 
 
 def main():
-    rpc_url = os.environ.get("POLYGON_RPC_URL")
+    rpc_url = os.environ.get("ARBITRUM_RPC_URL")
     if not rpc_url:
-        print("VIRHE: POLYGON_RPC_URL puuttuu.")
+        print("VIRHE: ARBITRUM_RPC_URL puuttuu.")
         sys.exit(1)
 
     w3 = Web3(Web3.HTTPProvider(rpc_url))
@@ -164,7 +152,6 @@ def main():
                     print(line)
                     alert(best_profit, best_amount)
                 else:
-                    # Tavallinen rivi - ei mahdollisuutta
                     print(line)
 
             time.sleep(CHECK_INTERVAL_SEC)

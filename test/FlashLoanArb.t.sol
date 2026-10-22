@@ -7,8 +7,8 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract FlashLoanArbForkTest is Test {
     address constant AAVE_PROVIDER = 0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb;
-    address constant USDC = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
-    address constant WETH = 0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619;
+    address constant USDC = 0xaf88d065e77c8cC2239327C5EDb3A432268e5831; // Arbitrum native USDC
+    address constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1; // Arbitrum WETH
     address constant UNIV3_ROUTER = 0xE592427A0AEce92De3Edee1F18E0157C05861564;
 
     FlashLoanArb arb;
